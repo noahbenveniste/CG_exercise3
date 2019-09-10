@@ -392,7 +392,7 @@ function main() {
     var imagedata = context.createImageData(w,h);
  
     // Define a rectangle in 2D with colors and coords at corners
-    var globals = { lightPos: new Vector(175,100,75),  // light over left upper rect
+    var globals = { lightPos: new Vector(175,100,25),  // light over left upper rect
                     lightCol: new Color(255,255,255)}; // light is white
     var tlAttribs = { diffuse: new Color(0,0,255)};    // all four rect verts blue
     var trAttribs = { diffuse: new Color(0,0,255)};
