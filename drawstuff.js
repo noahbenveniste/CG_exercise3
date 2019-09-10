@@ -320,7 +320,7 @@ function interpRect(imagedata,top,bottom,left,right,globals,tlAttribs,trAttribs,
         hVect = Vector.normalize(hVect);
         
         // calculate N dot H
-        var NdotH = Vector.dot(new Vector(0,0,1), hVect));
+        var NdotH = Vector.dot(new Vector(0,0,1), hVect);
         
         // calc diffuse color
         difColor.r = attribs.diffuse.r * globals.lightCol.r/255 * NdotL;
