@@ -302,12 +302,25 @@ function interpRect(imagedata,top,bottom,left,right,globals,tlAttribs,trAttribs,
         var difColor = new Color();
         var worldLoc = new Vector(pixX,pixY,0); // assume rect at z=0
         var lVect = new Vector();
+        var vVect = new Vector();
         
         // get light vector
         lVect.copy(globals.lightPos);
         lVect = Vector.subtract(lVect,worldLoc);
         lVect = Vector.normalize(lVect);
         var NdotL = Vector.dot(lVect,new Vector(0,0,1)); // rect in xy plane
+        
+        // get eye vector
+        vVect.copy(globals.eyePos);
+        vVect = Vector.subtrac(vVect,worldLoc);
+        
+        // get half vector (V + L normalized)
+        var hVect = new Vector();
+        hVect = Vector.add(vVect,lVect);
+        hVect = Vector.normalize(hVect);
+        
+        // calculate N dot H
+        var NdotH = Vector.dot(new Vector(0,0,1), hVect));
         
         // calc diffuse color
         difColor.r = attribs.diffuse.r * globals.lightCol.r/255 * NdotL;
@@ -392,8 +405,9 @@ function main() {
     var imagedata = context.createImageData(w,h);
  
     // Define a rectangle in 2D with colors and coords at corners
-    var globals = { lightPos: new Vector(175,100,25),  // light over left upper rect
-                    lightCol: new Color(255,255,255)}; // light is white
+    var globals = { lightPos: new Vector(175,100,25),  // light over right side of rectangle
+                    lightCol: new Color(255,255,255), // light is white
+                    eyePos: new Vector(50,50,50)}; 
     var tlAttribs = { ambient: new Color(0,0,128), diffuse: new Color(0,0,255), specular: new Color(255,255,255)};    // all four rect verts blue
     var trAttribs = { ambient: new Color(0,0,128), diffuse: new Color(0,0,255), specular: new Color(255,255,255)};
     var brAttribs = { ambient: new Color(0,0,128), diffuse: new Color(0,0,255), specular: new Color(255,255,255)};
