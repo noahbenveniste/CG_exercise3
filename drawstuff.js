@@ -312,7 +312,7 @@ function interpRect(imagedata,top,bottom,left,right,globals,tlAttribs,trAttribs,
         
         // get eye vector
         vVect.copy(globals.eyePos);
-        vVect = Vector.subtrac(vVect,worldLoc);
+        vVect = Vector.subtract(vVect,worldLoc);
         
         // get half vector (V + L normalized)
         var hVect = new Vector();
