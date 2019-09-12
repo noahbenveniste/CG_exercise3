@@ -299,7 +299,7 @@ function interpRect(imagedata,top,bottom,left,right,globals,tlAttribs,trAttribs,
     // assumes all other properties are floats
     // modifies pass image data
     function shadePixel(imagedata,pixX,pixY,globals,attribs) {
-        const var n = 2;
+        var n = 2;
         
         var ambColor = new Color();
         var difColor = new Color();
