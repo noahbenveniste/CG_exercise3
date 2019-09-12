@@ -299,7 +299,12 @@ function interpRect(imagedata,top,bottom,left,right,globals,tlAttribs,trAttribs,
     // assumes all other properties are floats
     // modifies pass image data
     function shadePixel(imagedata,pixX,pixY,globals,attribs) {
+        const var n = 2;
+        
+        var ambColor = new Color();
         var difColor = new Color();
+        var specColor = new Color();
+        var totalColor = new Color();
         var worldLoc = new Vector(pixX,pixY,0); // assume rect at z=0
         var lVect = new Vector();
         var vVect = new Vector();
@@ -322,12 +327,27 @@ function interpRect(imagedata,top,bottom,left,right,globals,tlAttribs,trAttribs,
         // calculate N dot H
         var NdotH = Vector.dot(new Vector(0,0,1), hVect);
         
+        // calculate ambient color
+        ambColor.r = attribs.ambient.r * globals.lightCol.r/255;
+        ambColor.g = attribs.ambient.g * globals.lightCol.g/255;
+        ambColor.b = attribs.ambient.b * globals.lightCol.b/255;
+        
         // calc diffuse color
         difColor.r = attribs.diffuse.r * globals.lightCol.r/255 * NdotL;
         difColor.g = attribs.diffuse.g * globals.lightCol.g/255 * NdotL;
         difColor.b = attribs.diffuse.b * globals.lightCol.b/255 * NdotL;
         
-        drawPixel(imagedata,pixX,pixY,difColor);
+        // calculate specular color
+        specColor.r = attribs.specular.r * globals.lightCol.r/255 * (NdotH ** n);
+        specColor.g = attribs.specular.g * globals.lightCol.g/255 * (NdotH ** n);
+        specColor.b = attribs.specular.b * globals.lightCol.b/255 * (NdotH ** n);
+        
+        // calculate total color
+        totalColor.r = ambColor.r + difColor.r + specColor.r;
+        totalColor.g = ambColor.g + difColor.g + specColor.g;
+        totalColor.b = ambColor.b + difColor.b + specColor.b;
+        
+        drawPixel(imagedata,pixX,pixY,totalColor);
     } // end shade pixel
     
     try {
